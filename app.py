@@ -123,7 +123,7 @@ class TaxGPT:
 
             system_prompt = self.load_system_prompt('prompt.txt')
             empty_keys = [key for key, value in self.field_dict.items() if value == ""]
-            extraction_prompt = "Puste pole to: " + ", ".join(empty_keys[0]) + ".\nOraz to co napisał użytkownik: " + f"{self.messages}\n" + "\n"
+            extraction_prompt = "Puste pole to: " + ", ".join(empty_keys[0]) + ".\nOraz to co napisał użytkownik: " + f"{self.messages[-1]}\n" + "\n"
             extraction_prompt += self.load_system_prompt('prompt1.txt')
 
             try:
@@ -148,7 +148,7 @@ class TaxGPT:
             try:
                 response = self.client.chat.completions.create(
                     model="gpt-4o",
-                    messages=[{"role": "system", "content": f"Oto puste pola: " + ", ".join(empty_keys) + self.load_system_prompt('prompt2.txt') + f"Oto lista poprzednich wiadomości: {self.messages}\n"}],
+                    messages=[{"role": "system", "content": f"Oto puste pola: " + ", ".join(empty_keys) + self.load_system_prompt('prompt2.txt') + f"Oto poprzednia wiadomość: {self.messages}\n"}],
                     max_tokens=200,
                     temperature=self.temperature
                 )
