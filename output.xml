@@ -9,9 +9,9 @@
   </Naglowek>
   <Podmiot1 rola="Podatnik">
     <OsobaFizyczna>
-      <NIP>N</NIP>
-      <ImiePierwsze>Mateusz</ImiePierwsze>
-      <Nazwisko>Idziejczak</Nazwisko>
+      <NIP/>
+      <ImiePierwsze>Jan</ImiePierwsze>
+      <Nazwisko>Kowalski</Nazwisko>
       <DataUrodzenia/>
       <ImieOjca/>
       <ImieMatki/>
@@ -43,14 +43,14 @@
     <AdresZagr/>
     <Naglowek/>
     <OsobaNiefizyczna/>
-    <AdresZamieszkaniaSiedziby>Ogrodnicza 11c, Janikowo, 62-006</AdresZamieszkaniaSiedziby>
-    <P_7>1</P_7>
-    <P_20>1</P_20>
-    <P_23>Ford Focus 2010</P_23>
+    <AdresZamieszkaniaSiedziby/>
+    <P_7>1500</P_7>
+    <P_20>3000</P_20>
+    <P_23/>
     <P_24/>
     <P_25/>
-    <P_26>4000</P_26>
-    <P_27>80</P_27>
+    <P_26/>
+    <P_27/>
     <P_28/>
     <P_29/>
     <P_30/>
@@ -75,7 +75,7 @@
     <P_49/>
     <P_51/>
     <P_52/>
-    <P_53>80</P_53>
+    <P_53/>
     <P_54/>
     <P_55/>
     <P_56/>
