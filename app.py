@@ -131,7 +131,8 @@ class TaxGPT:
                 response2 = self.client.beta.chat.completions.parse(
                     model="gpt-4o",
                     messages=[{"role": "system", "content": self.load_system_prompt('prompt_validator.txt') + f"\nDo sprawdzenia: {response}\n\nPoprzednie wiadomości: {self.messages}"}],
-                    response_format=self.DynamicFieldDict
+                    response_format=self.DynamicFieldDict,
+                    temperature=self.temperature
                 )
                 parsed_response2 = response2.choices[0].message.parsed
                 response_dict2 = parsed_response2.dict()
