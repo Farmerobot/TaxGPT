@@ -13,7 +13,7 @@ body {
 /* Chat Container */
 #chat-container {
     width: 1024px;
-    height: 512px;
+    height: 650px;
     margin: 0 auto;
     background-color: #1b132d;
     padding: 20px;
@@ -35,7 +35,7 @@ h1 {
     border: 2px solid #e6007e;
     display: flex;
     flex-direction: column;
-    height: 350px;
+    height: 450px;
     padding: 10px;
     overflow-y: auto;
     margin-bottom: 10px;
