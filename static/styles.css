@@ -1,106 +1,155 @@
 /* General Styles */
+
+/* 
+    Set general styles for the entire page. 
+    Apply a dark background, white text, and center the content.
+*/
 body {
-    font-family: Arial, sans-serif;
-    background-color: #1b132d;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
+    font-family: Arial, sans-serif; /* Set font for the entire page */
+    background-color: #1b132d; /* Dark purple background color for aesthetic and readability */
+    color: #ffffff; /* White text for contrast against the dark background */
+    display: flex; /* Use flexbox to center content vertically and horizontally */
+    align-items: center; /* Vertically center content */
+    justify-content: center; /* Horizontally center content */
+    height: 100vh; /* Full viewport height */
+    margin: 0; /* Remove default margin */
 }
 
 /* Chat Container */
+
+/*
+    Styles for the main chat container that holds the chat messages and input elements.
+    This container is centered and has a border with a contrasting color.
+*/
 #chat-container {
-    width: 1024px;
-    height: 650px;
-    margin: 0 auto;
-    background-color: #1b132d;
-    padding: 20px;
-    border: 2px solid #e6007e;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding-top: 0;
+    width: 1024px; /* Set a fixed width for the chat container */
+    height: 650px; /* Set a fixed height for the chat container */
+    margin: 0 auto; /* Center the container horizontally */
+    background-color: #1b132d; /* Same as body to blend with the background */
+    padding: 20px; /* Padding inside the container */
+    border: 2px solid #e6007e; /* Pink border for visual distinction */
+    border-radius: 8px; /* Rounded corners for aesthetics */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding-top: 0; /* Override top padding to zero to avoid excess spacing */
 }
 
+/* 
+    Heading styles for the chat container's title.
+    Bright, contrasting color and bold, large font for emphasis.
+*/
 h1 {
-    color: #02bcc1;
-    text-align: center;
-    font-size: 2em;
-    font-weight: 700;
+    color: #02bcc1; /* Cyan color for contrast against dark background */
+    text-align: center; /* Center align the heading */
+    font-size: 2em; /* Set the size of the heading text */
+    font-weight: 700; /* Make the heading bold */
 }
 
 /* Messages Area */
+
+/* 
+    Styles for the messages container where chat messages are displayed.
+    Provides a distinct border, fixed height, and scrolling behavior.
+*/
 #messages {
-    border: 2px solid #e6007e;
-    display: flex;
-    flex-direction: column;
-    height: 450px;
-    padding: 10px;
-    overflow-y: auto;
-    margin-bottom: 10px;
-    background-color: #1b132d;
-    border-radius: 8px;
+    border: 2px solid #e6007e; /* Pink border for contrast and clear separation */
+    display: flex; /* Flexbox for arranging messages vertically */
+    flex-direction: column; /* Stack messages from top to bottom */
+    height: 450px; /* Fixed height for a defined chat area */
+    padding: 10px; /* Padding inside the messages container */
+    overflow-y: auto; /* Allow vertical scrolling for overflowing messages */
+    margin-bottom: 10px; /* Space between the messages area and the input area */
+    background-color: #1b132d; /* Match background to blend with the rest */
+    border-radius: 8px; /* Rounded corners to match container style */
 }
 
+/* 
+    Styles for individual message elements.
+    Set padding, rounded corners, and ensure messages don't exceed 70% of the container width.
+*/
 .message {
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    max-width: 70%;
-    word-wrap: break-word;
+    margin-bottom: 10px; /* Space between messages */
+    padding: 10px; /* Padding inside each message */
+    border-radius: 5px; /* Rounded corners for each message */
+    max-width: 70%; /* Messages are limited to 70% width for readability */
+    word-wrap: break-word; /* Ensure long words break to fit within container */
 }
 
+/* 
+    Styles for user messages. 
+    Align them to the right, with a cyan background to distinguish from bot messages.
+*/
 .user-message {
-    background-color: #02bcc1;
-    color: #ffffff;
-    margin-left: auto;
-    text-align: right;
+    background-color: #02bcc1; /* Cyan background for user messages */
+    color: #ffffff; /* White text for readability against the cyan background */
+    margin-left: auto; /* Push the message to the right */
+    text-align: right; /* Right-align the text */
 }
 
+/* 
+    Styles for bot messages.
+    Align them to the left, with a pink background to distinguish from user messages.
+*/
 .bot-message {
-    background-color: #e6007e;
-    color: #ffffff;
-    margin-right: auto;
-    text-align: left;
+    background-color: #e6007e; /* Pink background for bot messages */
+    color: #ffffff; /* White text for readability against the pink background */
+    margin-right: auto; /* Push the message to the left */
+    text-align: left; /* Left-align the text */
 }
 
 /* Input and Button */
+
+/* 
+    Styles for the input box where the user types messages.
+    Set padding, border, and color schemes to fit the rest of the theme.
+*/
 #message-box {
-    width: calc(100% - 120px);
-    padding: 10px;
-    border-radius: 5px;
-    border: 2px solid #e6007e;
-    background-color: #ffffff;
-    color: #1b132d;
+    width: calc(100% - 120px); /* Full width minus the width of the send button and some spacing */
+    padding: 10px; /* Padding inside the input box */
+    border-radius: 5px; /* Rounded corners for aesthetics */
+    border: 2px solid #e6007e; /* Pink border to match chat container */
+    background-color: #ffffff; /* White background for better visibility while typing */
+    color: #1b132d; /* Dark text color for readability against white background */
 }
 
+/* 
+    Styles for the send button.
+    Set the background color, border, and other visual details to make it consistent with the theme.
+*/
 #send-button {
-    padding: 10px;
-    background-color: #02bcc1;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px;
-    font-size: 1em;
-    font-weight: 700;
+    padding: 10px; /* Padding inside the button */
+    background-color: #02bcc1; /* Cyan background to match user messages */
+    color: #ffffff; /* White text for contrast */
+    border: none; /* Remove default button border */
+    border-radius: 5px; /* Rounded corners for consistency */
+    cursor: pointer; /* Change cursor to pointer to indicate clickability */
+    margin-left: 10px; /* Space between the input box and the button */
+    font-size: 1em; /* Set font size */
+    font-weight: 700; /* Make the text bold */
 }
 
+/* 
+    Styles for hover and focus states of the send button.
+    Change background color for better user interaction feedback.
+*/
 #send-button:hover,
 #send-button:focus {
-    background-color: #e6007e;
-    outline: none;
+    background-color: #e6007e; /* Change background color on hover/focus for contrast */
+    outline: none; /* Remove the default outline */
 }
 
 /* Screen Reader Only */
+
+/* 
+    Styles for elements that are only visible to screen readers.
+    Used for accessibility to make labels available for screen readers without visually displaying them.
+*/
 .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
+    position: absolute; /* Take the element out of normal flow */
+    width: 1px; /* Reduce size to 1px */
+    height: 1px; /* Reduce size to 1px */
+    padding: 0; /* Remove padding */
+    margin: -1px; /* Move it off-screen */
+    overflow: hidden; /* Hide any overflowing content */
+    clip: rect(0, 0, 0, 0); /* Clip the element to make it invisible */
+    border: 0; /* Remove border */
 }
