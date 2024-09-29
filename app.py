@@ -128,13 +128,6 @@ class TaxGPT:
             extraction_prompt += self.load_system_prompt('prompt1.txt')
 
             try:
-                response = self.client.beta.chat.completions.parse(
-                    model="gpt-4o",
-                    messages=[{"role": "system", "content": extraction_prompt}],
-                    response_format=self.DynamicFieldDict,
-                    temperature=self.temperature
-                )
-
                 response2 = self.client.beta.chat.completions.parse(
                     model="gpt-4o",
                     messages=[{"role": "system", "content": self.load_system_prompt('prompt_validator.txt') + f"\nDo sprawdzenia: {response}\n\nPoprzednie wiadomości: {self.messages}"}],
