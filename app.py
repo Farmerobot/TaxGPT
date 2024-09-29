@@ -131,9 +131,15 @@ class TaxGPT:
                     response_format=self.DynamicFieldDict
                 )
 
-                parsed_response = response.choices[0].message.parsed
-                response_dict = parsed_response.dict()
-                for key, value in response_dict.items():
+                response2 = self.client.beta.chat.completions.parse(
+                    model="gpt-4o",
+                    messages=[{"role": "system", "content": self.load_system_prompt('prompt_validator.txt') + f"\nDo sprawdzenia: {response}\n\nPoprzednie wiadomości: {self.messages}"}],
+                    response_format=self.DynamicFieldDict
+                )
+                parsed_response2 = response2.choices[0].message.parsed
+                response_dict2 = parsed_response2.dict()
+
+                for key, value in response_dict2.items():
                     if value:
                         self.field_dict[key] = value
             except Exception as e:
@@ -141,6 +147,9 @@ class TaxGPT:
                 self.messages.append({"text": ai_response, "sender": "bot"})
 
             empty_keys = [key for key, value in self.field_dict.items() if value == ""]
+            not_empty_keys = [(key, value) for key, value in self.field_dict.items() if value != ""]
+            print("Empty keys:", empty_keys)
+            print("Not empty keys:", not_empty_keys)
             try:
                 response = self.client.chat.completions.create(
                     model="gpt-4o",
