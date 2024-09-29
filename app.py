@@ -4,6 +4,9 @@ from flask import Flask, render_template, request, jsonify, send_file
 from dotenv import load_dotenv
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
+from pydantic import BaseModel, Field, create_model, ValidationError
+import json
+from typing import Optional
 
 app = Flask(__name__)
 
@@ -116,6 +119,36 @@ def send_message():
     # Read system prompt from prompt.txt
     system_prompt = load_system_prompt('prompt.txt')
 
+    empty_keys = [key for key, value in field_dict.items() if value == ""]
+
+    extraction_prompt = (
+        f"Here is a list of fields that are still empty: {empty_keys}.\n"
+        f"Based on the following conversation history, fill in these fields where possible:\n"
+        f"{messages}\n"
+        f"Make sure to never make up information, and only provide accurate data.\n"
+        f"Only include the fields that you have values for, and leave the rest out."
+    )
+
+    try:
+        response = client.beta.chat.completions.parse(model="gpt-4o",
+        messages = [
+            {"role": "system", "content": extraction_prompt},
+        ],
+        response_format=DynamicFieldDict)
+
+        parsed_response = response.choices[0].message.parsed
+
+        response_dict = parsed_response.dict()
+        print(response_dict)
+        for key, value in response_dict.items():
+            if value:
+                field_dict[key] = value
+                print(f"Updated field_dict[{key}] with value: {value}")
+    except Exception as e:
+        ai_response = "Sorry, there was an error processing your request: " + str(e)
+        print(ai_response)
+        messages.append({"text": ai_response, "sender": "bot"})
+
     # Get response from Azure OpenAI using ChatCompletion
     try:
         response = client.chat.completions.create(model="gpt-4o",
@@ -159,6 +192,12 @@ if __name__ == "__main__":
 
     # Create the dictionary from the XSD file
     field_dict = extract_non_nested_fields_to_dict(xsd_file)
+
+    # Create a dynamic Pydantic model based on field_dict
+    DynamicFieldDict = create_model(
+        'DynamicFieldDict',
+        **{key: (Optional[str], Field()) for key in field_dict.keys()}
+    )
 
     # Populate the dictionary with sample values (customize as needed)
     field_dict["KodFormularza"] = "PCC-3"
