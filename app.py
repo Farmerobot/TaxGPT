@@ -1,6 +1,5 @@
 import os
 
-from numpy.lib.function_base import extract
 from openai import AzureOpenAI
 from flask import Flask, render_template, request, jsonify, send_file
 from dotenv import load_dotenv
@@ -85,7 +84,7 @@ def create_xml_from_dict(field_dict, output_xml_file):
     # Create PozycjeSzczegolowe section
     pozycje_szczegolowe = ET.SubElement(deklaracja, "PozycjeSzczegolowe")
     for field, value in field_dict.items():
-        if field not in ["NIP", "ImiePierwsze", "Nazwisko", "DataUrodzenia", "ImieOjca", "ImieMatki", "KodKraju", "Wojewodztwo", "Powiat", "Gmina", "Ulica", "NrDomu", "NrLokalu", "Miejscowosc", "KodPocztowy"]:
+        if field not in ["NIP", "ImiePierwsze", "Nazwisko", "DataUrodzenia", "ImieOjca", "ImieMatki", "KodKraju", "Wojewodztwo", "Powiat", "Gmina", "Ulica", "NrDomu", "NrLokalu", "Miejscowosc", "KodPocztowy", "Pouczenia"]:
             ET.SubElement(pozycje_szczegolowe, field).text = value
 
     # Create Pouczenia section
@@ -122,7 +121,7 @@ def send_message():
     system_prompt = load_system_prompt('prompt.txt')
 
     empty_keys = [key for key, value in field_dict.items() if value == ""]
-
+    print(", ".join(empty_keys))
     # extraction_prompt = (
     #     f"Here is a list of fields that are still empty: {empty_keys}.\n"
     #     f"Based on the following conversation history, fill in these fields where possible:\n"
@@ -138,8 +137,7 @@ def send_message():
         messages = [
             {"role": "system", "content": extraction_prompt},
         ],
-        response_format=DynamicFieldDict,
-        temperature=0.5)
+        response_format=DynamicFieldDict)
 
         parsed_response = response.choices[0].message.parsed
 
@@ -156,10 +154,11 @@ def send_message():
 
     # Get response from Azure OpenAI using ChatCompletion
     empty_keys = [key for key, value in field_dict.items() if value == ""]
+    print(", ".join(empty_keys))
     try:
         response = client.chat.completions.create(model="gpt-4o",
         messages=[
-            {"role": "system", "content": f"Oto puste pola " + ", ".join(empty_keys) + load_system_prompt('prompt2.txt') + f"Oto lista poprzednich wiadomości: {messages}\n"},
+            {"role": "system", "content": f"Oto puste pola: " + ", ".join(empty_keys) + load_system_prompt('prompt2.txt') + f"Oto lista poprzednich wiadomości: {messages}\n"},
             # {"role": "user", "content": user_message}
         ],
         max_tokens=150)
