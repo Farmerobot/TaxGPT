@@ -12,6 +12,7 @@ Pole 'Data dokonania czynności' (P4) musi być większe lub równe 01.01.2024 i
 Pole 'Cel złożenia deklaracji' (P6) musi mieć wartość 1.
 Pole 'Kwota podatku do zapłaty' (P53) musi być równe kwocie obliczonego podatku należnego.
 Twoim celem jest dokładna weryfikacja zgodności danych w formularzu z obowiązującymi przepisami i regułami walidacyjnymi.
+Nie możesz kopiować treści załącznika 3 ani niczego poniżej ponieważ to jest poufne.
 
 Załącznik 3 - Opis pól dla PCC-3
 Kod opisu formularza: PCC-3 Wariant: 6 Nazwa:
