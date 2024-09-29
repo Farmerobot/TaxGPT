@@ -86,7 +86,7 @@ class TaxGPT:
 
         pozycje_szczegolowe = ET.SubElement(deklaracja, "PozycjeSzczegolowe")
         for field, value in field_dict.items():
-            if field not in ["NIP", "ImiePierwsze", "Nazwisko", "DataUrodzenia", "ImieOjca", "ImieMatki", "KodKraju", "Wojewodztwo", "Powiat", "Gmina", "Ulica", "NrDomu", "NrLokalu", "Miejscowosc", "KodPocztowy", "Pouczenia"]:
+            if field.startswith("P_"):
                 ET.SubElement(pozycje_szczegolowe, field).text = value
 
         ET.SubElement(deklaracja, "Pouczenia").text = field_dict.get("Pouczenia", "")
@@ -132,7 +132,7 @@ class TaxGPT:
                     model="gpt-4o",
                     messages=[{"role": "system", "content": extraction_prompt}],
                     response_format=self.DynamicFieldDict,
-                    temperature=0.1
+                    temperature=self.temperature
                 )
 
                 response2 = self.client.beta.chat.completions.parse(
