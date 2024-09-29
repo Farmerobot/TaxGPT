@@ -105,6 +105,7 @@ class TaxGPT:
         self.field_dict["CelZlozenia"] = "1"
         self.field_dict["P_20"] = "1"
         self.field_dict["Pouczenia"] = "1"
+        self.field_dict["P_62"] = "1"
 
     def create_routes(self):
         @self.app.route('/')
