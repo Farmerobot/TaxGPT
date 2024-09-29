@@ -5,4 +5,5 @@ python-dotenv
 langgraph
 xmlschema
 lxml
+langchain-openai
 pydantic

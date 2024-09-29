@@ -1,4 +1,6 @@
 import os
+
+from numpy.lib.function_base import extract
 from openai import AzureOpenAI
 from flask import Flask, render_template, request, jsonify, send_file
 from dotenv import load_dotenv
@@ -121,13 +123,15 @@ def send_message():
 
     empty_keys = [key for key, value in field_dict.items() if value == ""]
 
-    extraction_prompt = (
-        f"Here is a list of fields that are still empty: {empty_keys}.\n"
-        f"Based on the following conversation history, fill in these fields where possible:\n"
-        f"{messages}\n"
-        f"Make sure to never make up information, and only provide accurate data.\n"
-        f"Only include the fields that you have values for, and leave the rest out."
-    )
+    # extraction_prompt = (
+    #     f"Here is a list of fields that are still empty: {empty_keys}.\n"
+    #     f"Based on the following conversation history, fill in these fields where possible:\n"
+    #     f"{messages}\n"
+    #     f"Make sure to never make up information, and only provide accurate data.\n"
+    #     f"Only include the fields that you have values for, and leave the rest out."
+    # )
+    extraction_prompt = "oto lista pól, które są wciąż puste: " + ", ".join(empty_keys) + ".\nOraz to co napisał użytkownik: " + f"{messages}\n" + "\n"
+    extraction_prompt = extraction_prompt + load_system_prompt('prompt1.txt')
 
     try:
         response = client.beta.chat.completions.parse(model="gpt-4o",
@@ -151,11 +155,12 @@ def send_message():
         messages.append({"text": ai_response, "sender": "bot"})
 
     # Get response from Azure OpenAI using ChatCompletion
+    empty_keys = [key for key, value in field_dict.items() if value == ""]
     try:
         response = client.chat.completions.create(model="gpt-4o",
         messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_message}
+            {"role": "system", "content": f"Oto puste pola " + ", ".join(empty_keys) + load_system_prompt('prompt2.txt') + f"Oto lista poprzednich wiadomości: {messages}\n"},
+            # {"role": "user", "content": user_message}
         ],
         max_tokens=150)
 
