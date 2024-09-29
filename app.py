@@ -134,7 +134,8 @@ def send_message():
         messages = [
             {"role": "system", "content": extraction_prompt},
         ],
-        response_format=DynamicFieldDict)
+        response_format=DynamicFieldDict,
+        temperature=0.5)
 
         parsed_response = response.choices[0].message.parsed
 
@@ -206,4 +207,4 @@ if __name__ == "__main__":
     field_dict["P_20"] = "1"
     field_dict["Pouczenia"] = "1"
 
-    app.run(host='0.0.0.0', port=8000)
+    app.run()

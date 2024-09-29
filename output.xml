@@ -2,7 +2,7 @@
 <Deklaracja>
   <Naglowek>
     <KodFormularza kodSystemowy="PCC-3 (6)" kodPodatku="PCC" rodzajZobowiazania="Z" wersjaSchemy="1-0E">PCC-3</KodFormularza>
-    <WariantFormularza/>
+    <WariantFormularza>1</WariantFormularza>
     <CelZlozenia poz="P_6">1</CelZlozenia>
     <Data poz="P_4"/>
     <KodUrzedu/>
@@ -10,8 +10,8 @@
   <Podmiot1 rola="Podatnik">
     <OsobaFizyczna>
       <NIP/>
-      <ImiePierwsze/>
-      <Nazwisko/>
+      <ImiePierwsze>Jan</ImiePierwsze>
+      <Nazwisko>Kowalski</Nazwisko>
       <DataUrodzenia/>
       <ImieOjca/>
       <ImieMatki/>
@@ -32,7 +32,7 @@
   </Podmiot1>
   <PozycjeSzczegolowe>
     <KodFormularza>PCC-3</KodFormularza>
-    <WariantFormularza>6</WariantFormularza>
+    <WariantFormularza>1</WariantFormularza>
     <CelZlozenia>1</CelZlozenia>
     <Data/>
     <KodUrzedu/>
@@ -41,11 +41,11 @@
     <SkroconaNazwa/>
     <AdresPol/>
     <AdresZagr/>
-    <Naglowek/>
+    <Naglowek>Deklaracja CIT-8</Naglowek>
     <OsobaNiefizyczna/>
     <AdresZamieszkaniaSiedziby/>
-    <P_7/>
-    <P_20>1</P_20>
+    <P_7>1500</P_7>
+    <P_20>3000</P_20>
     <P_23/>
     <P_24/>
     <P_25/>
@@ -82,7 +82,7 @@
     <P_58/>
     <P_60/>
     <P_61/>
-    <Pouczenia/>
+    <Pouczenia>Pouczenia dotyczące CIT-8</Pouczenia>
   </PozycjeSzczegolowe>
-  <Pouczenia/>
+  <Pouczenia>Pouczenia dotyczące CIT-8</Pouczenia>
 </Deklaracja>
