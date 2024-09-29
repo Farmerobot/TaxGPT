@@ -7,6 +7,7 @@ from xml.dom import minidom
 from pydantic import BaseModel, Field, create_model, ValidationError
 import json
 from typing import Optional
+import logging
 
 class TaxGPT:
     def __init__(self):
@@ -19,6 +20,7 @@ class TaxGPT:
         self.xsd_file = 'schema.xsd'  # Ensure this path is correct and accessible
         self.output_xml_file = 'output.xml'  # Temporary output XML file path
         self.field_dict = self.extract_non_nested_fields_to_dict(self.xsd_file)
+        self.temperature = 0.5
         self.DynamicFieldDict = create_model(
             'DynamicFieldDict',
             **{key: (Optional[str], Field()) for key in self.field_dict.keys()}
@@ -121,14 +123,15 @@ class TaxGPT:
 
             system_prompt = self.load_system_prompt('prompt.txt')
             empty_keys = [key for key, value in self.field_dict.items() if value == ""]
-            extraction_prompt = "oto lista pól, które są wciąż puste: " + ", ".join(empty_keys) + ".\nOraz to co napisał użytkownik: " + f"{self.messages}\n" + "\n"
-            extraction_prompt = extraction_prompt + self.load_system_prompt('prompt1.txt')
+            extraction_prompt = "Puste pole to: " + ", ".join(empty_keys[0]) + ".\nOraz to co napisał użytkownik: " + f"{self.messages}\n" + "\n"
+            extraction_prompt += self.load_system_prompt('prompt1.txt')
 
             try:
                 response = self.client.beta.chat.completions.parse(
                     model="gpt-4o",
                     messages=[{"role": "system", "content": extraction_prompt}],
-                    response_format=self.DynamicFieldDict
+                    response_format=self.DynamicFieldDict,
+                    temperature=self.temperature
                 )
 
                 parsed_response = response.choices[0].message.parsed
@@ -136,6 +139,7 @@ class TaxGPT:
                 for key, value in response_dict.items():
                     if value:
                         self.field_dict[key] = value
+                        print(f"Field '{key}' populated with value: {value}")
             except Exception as e:
                 ai_response = "Sorry, there was an error processing your request: " + str(e)
                 self.messages.append({"text": ai_response, "sender": "bot"})
@@ -145,7 +149,8 @@ class TaxGPT:
                 response = self.client.chat.completions.create(
                     model="gpt-4o",
                     messages=[{"role": "system", "content": f"Oto puste pola: " + ", ".join(empty_keys) + self.load_system_prompt('prompt2.txt') + f"Oto lista poprzednich wiadomości: {self.messages}\n"}],
-                    max_tokens=150
+                    max_tokens=200,
+                    temperature=self.temperature
                 )
 
                 ai_response = response.choices[0].message.content.strip()
@@ -168,4 +173,8 @@ tax_app = TaxGPT()
 app = tax_app.app
 
 if __name__ == "__main__":
+    # Disable Flask logs by setting the logger level to ERROR
+    log = logging.getLogger('werkzeug')
+    log.setLevel(logging.ERROR)
+
     tax_app.run()
