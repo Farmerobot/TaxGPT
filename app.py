@@ -250,6 +250,13 @@ class TaxGPT:
             self.create_xml_from_dict(self.field_dict, self.output_xml_file)
             return send_file(self.output_xml_file, as_attachment=True, download_name='output.xml')
 
+        @self.app.route('/generate_history', methods=['GET'])
+        def generate_history():
+            output_history_file = 'output_history.json'
+            with open(output_history_file, 'w', encoding='utf-8') as f:
+                f.write(f"{self.messages}")
+            return send_file(output_history_file, as_attachment=True, download_name='output.json')
+
     def run(self):
         self.app.run()
 
