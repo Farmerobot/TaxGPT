@@ -1,22 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TaxGPT</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 </head>
 
 <body>
     <div id="chat-container">
         <h1>TaxGPT</h1>
         <div id="messages" aria-live="polite"></div>
-        <label for="message-box" class="sr-only">Type your message</label>
-        <input type="text" id="message-box" placeholder="Type your message..." aria-label="Message box">
-        <button id="send-button">Send</button>
+        <label for="message-box" class="sr-only">Napisz wiadomość</label>
+        <input type="text" id="message-box" placeholder="Napisz wiadomość..." aria-label="Message box">
+        <button id="send-button">Wyślij</button>
+        <br><br>
+        <button id="download-xml-button" onclick="downloadXML()">Pobierz XML</button>
     </div>
     <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <script>
+        function downloadXML() {
+            window.location.href = "{{ url_for('generate_xml') }}";
+        }
+    </script>
 </body>
 
 </html>

@@ -20,17 +20,21 @@ body {
     border: 2px solid #e6007e;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding-top: 0;
 }
 
 h1 {
     color: #02bcc1;
     text-align: center;
     font-size: 2em;
+    font-weight: 700;
 }
 
 /* Messages Area */
 #messages {
     border: 2px solid #e6007e;
+    display: flex;
+    flex-direction: column;
     height: 350px;
     padding: 10px;
     overflow-y: auto;
@@ -80,6 +84,7 @@ h1 {
     cursor: pointer;
     margin-left: 10px;
     font-size: 1em;
+    font-weight: 700;
 }
 
 #send-button:hover,
