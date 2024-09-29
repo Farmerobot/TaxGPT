@@ -43,7 +43,7 @@ def extract_non_nested_fields_to_dict(xsd_file):
     return required_fields_dict
 
 def create_xml_from_dict(field_dict, output_xml_file):
-    # Create root element for the XML file
+    # Create root  element for the XML file
     deklaracja = ET.Element("Deklaracja")
 
     # Create Naglowek section
