@@ -107,6 +107,66 @@ class TaxGPT:
         self.field_dict["Pouczenia"] = "1"
         self.field_dict["P_62"] = "1"
 
+    def validate_dict(self, response_dict):
+        from datetime import datetime
+
+        # Validate "DATA DOKONANIA CZYNNOŚCI" (P4)
+        if 'Data' in response_dict and response_dict['Data']:
+            try:
+                p4_date = datetime.strptime(response_dict['Data'], '%Y-%m-%d')
+                min_date = datetime.strptime('2024-01-01', '%Y-%m-%d')
+                if p4_date < min_date:
+                    response_dict['Data'] = ""
+            except ValueError:
+                response_dict['Data'] = ""
+
+        # Validate "CEL ZŁOŻENIA DEKLARACJI" (P6)
+        if 'CelZlozenia' in response_dict:
+            if response_dict['CelZlozenia'] != "1":
+                response_dict['CelZlozenia'] = ""
+
+        # Validate "PODMIOT SKŁADAJĄCY DEKLARACJĘ" (P7)
+        if 'P7' in response_dict:
+            if response_dict['P7'] not in ["1", "5"]:
+                response_dict['P7'] = ""
+
+        # Validate "PRZEDMIOT OPODATKOWANIA" (P20)
+        if 'P20' in response_dict:
+            if response_dict['P20'] != "1":
+                response_dict['P20'] = ""
+
+        # Validate "MIEJSCE POŁOŻENIA RZECZY LUB WYKONYWANIA PRAWA MAJĄTKOWEGO" (P21)
+        if 'P21' in response_dict:
+            if response_dict['P21'] not in ["0", "1", "2"]:
+                response_dict['P21'] = ""
+
+        # Validate "MIEJSCE DOKONANIA CZYNNOŚCI CYWILNOPRAWNEJ" (P22)
+        if 'P22' in response_dict:
+            if response_dict['P22'] not in ["0", "1", "2"]:
+                response_dict['P22'] = ""
+
+        # Validate "PODSTAWA OPODATKOWANIA DLA UMOWY SPRZEDAŻY" (P26)
+        if 'P26' in response_dict:
+            try:
+                p26_value = float(response_dict['P26'])
+                if p26_value < 1000:
+                    response_dict['P26'] = ""
+            except ValueError:
+                response_dict['P26'] = ""
+
+        # Validate "LICZBA DOŁĄCZONYCH ZAŁĄCZNIKÓW PCC-3/A" (P62)
+        if 'P62' in response_dict and 'P7' in response_dict:
+            try:
+                p62_value = int(response_dict['P62'])
+                if response_dict['P7'] == "1" and p62_value <= 0:
+                    response_dict['P62'] = ""
+                elif response_dict['P7'] != "1" and p62_value != 0:
+                    response_dict['P62'] = ""
+            except ValueError:
+                response_dict['P62'] = ""
+
+        return response_dict
+
     def create_routes(self):
         @self.app.route('/')
         def index():
@@ -130,20 +190,39 @@ class TaxGPT:
             try:
                 response2 = self.client.beta.chat.completions.parse(
                     model="gpt-4o",
-                    messages=[{"role": "system", "content": self.load_system_prompt('prompt_validator.txt') + f"\nDo sprawdzenia: {response}\n\nPoprzednie wiadomości: {self.messages}"}],
+                    messages=[{"role": "system", "content": self.load_system_prompt('prompt2.txt') + f"\n\nPoprzednie wiadomości: {self.messages}"}],
                     response_format=self.DynamicFieldDict,
                     temperature=self.temperature
                 )
                 parsed_response2 = response2.choices[0].message.parsed
                 response_dict2 = parsed_response2.dict()
 
-                for key, value in response_dict2.items():
+                validated_dict = self.validate_dict(response_dict2)
+
+                for key, value in validated_dict.items():
                     if value:
                         self.field_dict[key] = value
                         print(f"Field '{key}' populated with value: {value}")
             except Exception as e:
                 ai_response = "Sorry, there was an error processing your request: " + str(e)
-                self.messages.append({"text": ai_response, "sender": "bot"})
+                # self.messages.append({"text": ai_response, "sender": "bot"})
+                print(ai_response)
+
+            # Validate the prompt
+            validation_prompt = self.load_system_prompt('zalacznik3.txt')
+            try:
+                response = self.client.chat.completions.create(
+                    model="gpt-4o",
+                    messages=[{"role": "system", "content": extraction_prompt + user_message}],
+                    max_tokens=200,
+                    temperature=self.temperature
+                )
+                if response:
+                    error = response.choices[0].message.content.strip() + "\n"
+                else:
+                    error = ""
+            except Exception as e:
+                print(response)
 
             empty_keys = [key for key, value in self.field_dict.items() if value == ""]
             not_empty_keys = [(key, value) for key, value in self.field_dict.items() if value != ""]
@@ -152,7 +231,7 @@ class TaxGPT:
             try:
                 response = self.client.chat.completions.create(
                     model="gpt-4o",
-                    messages=[{"role": "system", "content": f"Oto puste pola: " + ", ".join(empty_keys) + self.load_system_prompt('prompt2.txt') + f"Oto poprzednia wiadomość: {self.messages}\n"}],
+                    messages=[{"role": "system", "content": f"{error}Oto puste pola: " + ", ".join(empty_keys) + self.load_system_prompt('prompt2.txt') + f"Oto poprzednia wiadomość: {self.messages}\n"}],
                     max_tokens=200,
                     temperature=self.temperature
                 )
@@ -161,7 +240,8 @@ class TaxGPT:
                 self.messages.append({"text": ai_response, "sender": "bot"})
             except Exception as e:
                 ai_response = "Sorry, there was an error processing your request: " + str(e)
-                self.messages.append({"text": ai_response, "sender": "bot"})
+                # self.messages.append({"text": ai_response, "sender": "bot"})
+                print(ai_response)
 
             return jsonify(success=True)
 

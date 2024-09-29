@@ -46,7 +46,6 @@ document.getElementById('message-box').addEventListener('keydown', (event) => {
     }
 });
 
-
 // Load messages every 2 seconds
 setInterval(loadMessages, 2000);
 loadMessages();
