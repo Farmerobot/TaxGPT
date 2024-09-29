@@ -131,7 +131,7 @@ class TaxGPT:
                     model="gpt-4o",
                     messages=[{"role": "system", "content": extraction_prompt}],
                     response_format=self.DynamicFieldDict,
-                    temperature=self.temperature
+                    temperature=0.1
                 )
 
                 parsed_response = response.choices[0].message.parsed

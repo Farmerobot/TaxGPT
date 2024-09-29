@@ -2,55 +2,55 @@
 <Deklaracja>
   <Naglowek>
     <KodFormularza kodSystemowy="PCC-3 (6)" kodPodatku="PCC" rodzajZobowiazania="Z" wersjaSchemy="1-0E">PCC-3</KodFormularza>
-    <WariantFormularza>1</WariantFormularza>
+    <WariantFormularza>6</WariantFormularza>
     <CelZlozenia poz="P_6">1</CelZlozenia>
-    <Data poz="P_4"/>
-    <KodUrzedu/>
+    <Data poz="P_4">2022-03-10</Data>
+    <KodUrzedu>Urząd Skarbowy we Wrocławiu</KodUrzedu>
   </Naglowek>
   <Podmiot1 rola="Podatnik">
     <OsobaFizyczna>
-      <NIP/>
-      <ImiePierwsze>Jan</ImiePierwsze>
-      <Nazwisko>Kowalski</Nazwisko>
+      <NIP>N</NIP>
+      <ImiePierwsze>Mateusz</ImiePierwsze>
+      <Nazwisko>Idziejczak</Nazwisko>
       <DataUrodzenia/>
       <ImieOjca/>
       <ImieMatki/>
     </OsobaFizyczna>
     <AdresZamieszkaniaSiedziby rodzajAdresu="RAD">
       <AdresPol>
-        <KodKraju/>
+        <KodKraju>PL</KodKraju>
         <Wojewodztwo/>
         <Powiat/>
         <Gmina/>
         <Ulica/>
-        <NrDomu/>
+        <NrDomu>11C</NrDomu>
         <NrLokalu/>
-        <Miejscowosc/>
-        <KodPocztowy/>
+        <Miejscowosc>Janikowo</Miejscowosc>
+        <KodPocztowy>62-006</KodPocztowy>
       </AdresPol>
     </AdresZamieszkaniaSiedziby>
   </Podmiot1>
   <PozycjeSzczegolowe>
     <KodFormularza>PCC-3</KodFormularza>
-    <WariantFormularza>1</WariantFormularza>
+    <WariantFormularza>6</WariantFormularza>
     <CelZlozenia>1</CelZlozenia>
-    <Data/>
-    <KodUrzedu/>
-    <PESEL/>
+    <Data>2022-03-10</Data>
+    <KodUrzedu>Urząd Skarbowy we Wrocławiu</KodUrzedu>
+    <PESEL>03251703232</PESEL>
     <PelnaNazwa/>
     <SkroconaNazwa/>
-    <AdresPol/>
+    <AdresPol>ul. Ogrodnicza 11C</AdresPol>
     <AdresZagr/>
-    <Naglowek>Deklaracja CIT-8</Naglowek>
+    <Naglowek/>
     <OsobaNiefizyczna/>
-    <AdresZamieszkaniaSiedziby/>
-    <P_7>1500</P_7>
-    <P_20>3000</P_20>
-    <P_23/>
+    <AdresZamieszkaniaSiedziby>Ogrodnicza 11c, Janikowo, 62-006</AdresZamieszkaniaSiedziby>
+    <P_7>1</P_7>
+    <P_20>1</P_20>
+    <P_23>Ford Focus 2010</P_23>
     <P_24/>
     <P_25/>
-    <P_26/>
-    <P_27/>
+    <P_26>4000</P_26>
+    <P_27>80</P_27>
     <P_28/>
     <P_29/>
     <P_30/>
@@ -75,14 +75,13 @@
     <P_49/>
     <P_51/>
     <P_52/>
-    <P_53/>
+    <P_53>80</P_53>
     <P_54/>
     <P_55/>
     <P_56/>
     <P_58/>
     <P_60/>
     <P_61/>
-    <Pouczenia>Pouczenia dotyczące CIT-8</Pouczenia>
   </PozycjeSzczegolowe>
-  <Pouczenia>Pouczenia dotyczące CIT-8</Pouczenia>
+  <Pouczenia>1</Pouczenia>
 </Deklaracja>
