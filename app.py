@@ -16,7 +16,14 @@ class TaxGPT:
         self.client = AzureOpenAI(azure_endpoint=os.getenv("AZURE_OPENAI_API_BASE"),
                                   api_key=os.getenv("AZURE_OPENAI_API_KEY"),
                                   api_version="2023-03-15-preview")
-        self.messages = [{"text": "W czym mogę pomóc?", "sender": "system"}]
+        self.messages = [{"text": """
+        Witaj! Jestem Twoim asystentem AI, który pomoże Ci w wypełnieniu formularza PCC-3 (wersja 6), dotyczącego podatku od czynności cywilnoprawnych. Aby skutecznie przejść przez proces, potrzebuję kilku podstawowych informacji na temat transakcji, którą chcesz zgłosić.
+
+Typ transakcji (np. pożyczka, sprzedaż, darowizna)
+Strony umowy – kto bierze udział w transakcji?
+Wartość transakcji i datę zawarcia
+Czy obowiązują jakieś ulgi lub szczególne okoliczności?
+Podaj te informacje, a przeprowadzę Cię przez kolejne kroki.""", "sender": "system"}]
         self.xsd_file = 'schema.xsd'  # Ensure this path is correct and accessible
         self.output_xml_file = 'output.xml'  # Temporary output XML file path
         self.field_dict = self.extract_non_nested_fields_to_dict(self.xsd_file)
